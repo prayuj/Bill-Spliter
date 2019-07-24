@@ -206,7 +206,7 @@ class Items extends Component {
             <td>Enter total tax</td>
             <td>
               <input
-                type="name"
+                type="number"
                 step="0.01"
                 name="tax"
                 class="form-control"
