@@ -99,7 +99,8 @@ class Items extends Component {
         }
         if (e.target.name === "equal" && e.target.checked) {
           for (let i = 0; i < this.state.names.length; i++) {
-            item.contributions[i] = Math.round(100 / this.state.names.length);
+            item.contributions[i] =
+              Math.round((100 / this.state.names.length) * 100) / 100;
           }
         } else {
           item.contributions[parseInt(e.target.name.split("contribution")[1])] =
@@ -140,7 +141,7 @@ class Items extends Component {
           sum += contri[j];
         }
 
-        if (sum !== 100) {
+        if (Math.round(sum) !== 100) {
           flag = false;
           item.warning = true;
           item.warning_text = "Make sure sum is 100";
@@ -161,6 +162,7 @@ class Items extends Component {
       <form onSubmit={this.handleForm}>
         {this.state.items.map((item, index) => (
           <div
+            key={index}
             style={{
               border: item.warning ? "10px solid red" : "2px solid",
               margin: "2%",
@@ -183,7 +185,7 @@ class Items extends Component {
             />
             <button
               type="button"
-              class="btn btn-danger"
+              className="btn btn-danger"
               id={item.id}
               onClick={this.deleteItem}
             >
@@ -193,7 +195,7 @@ class Items extends Component {
         ))}
         <button
           type="button"
-          class="btn btn-primary"
+          className="btn btn-primary"
           id="additem"
           onClick={this.addItem}
         >
@@ -202,23 +204,25 @@ class Items extends Component {
         <br />
         <br />
         <table>
-          <tr>
-            <td>Enter total tax</td>
-            <td>
-              <input
-                type="number"
-                step="0.01"
-                name="tax"
-                class="form-control"
-                id="nameOfPerson"
-                placeholder="Enter Tax"
-                required
-              />
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>Enter total tax</td>
+              <td>
+                <input
+                  type="number"
+                  step="0.01"
+                  name="tax"
+                  className="form-control"
+                  id="nameOfPerson"
+                  placeholder="Enter Tax"
+                  required
+                />
+              </td>
+            </tr>
+          </tbody>
         </table>
 
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>

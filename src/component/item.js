@@ -43,14 +43,14 @@ class Item extends Component {
         </thead>
         <tbody>
           {this.state.names.map((name, index) => (
-            <tr>
+            <tr key={index}>
               <td>{name}</td>
               <td>
                 <input
                   type="number"
-                  step="0.1"
+                  step="0.01"
                   name={"contribution" + index}
-                  class="form-control"
+                  className="form-control"
                   id={this.state.id}
                   placeholder="Enter Percentage"
                   value={this.state.contributions[index]}
