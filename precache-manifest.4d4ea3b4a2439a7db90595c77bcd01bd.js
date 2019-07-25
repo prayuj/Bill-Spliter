@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4933d2c1c9b80cf54ed77432c9ab2a11",
+    "revision": "0b6b838c0354a8a6dbe918890211bd93",
     "url": "/Bill-Spliter/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Bill-Spliter/static/css/2.b49442d9.chunk.css"
   },
   {
-    "revision": "87b3dff4528f8b7ea3df",
+    "revision": "7ebf5ea376661f95af29",
     "url": "/Bill-Spliter/static/css/main.771cc898.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Bill-Spliter/static/js/2.93afa1b5.chunk.js"
   },
   {
-    "revision": "87b3dff4528f8b7ea3df",
-    "url": "/Bill-Spliter/static/js/main.0b3d3f25.chunk.js"
+    "revision": "7ebf5ea376661f95af29",
+    "url": "/Bill-Spliter/static/js/main.fedcad60.chunk.js"
   },
   {
     "revision": "a725ae91837666bf90da",
