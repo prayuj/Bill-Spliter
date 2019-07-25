@@ -113,7 +113,7 @@ class GetNames extends Component {
           Add Name
         </button>
         <br />
-        <button type="submit" className="btn btn-success">
+        <button type="submit" className="btn btn-info">
           Start Splitting!
         </button>
       </form>

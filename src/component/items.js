@@ -160,6 +160,7 @@ class Items extends Component {
   render() {
     return (
       <form onSubmit={this.handleForm}>
+        <h3>Enter Items</h3>
         {this.state.items.map((item, index) => (
           <div
             key={index}
@@ -221,9 +222,8 @@ class Items extends Component {
             </tr>
           </tbody>
         </table>
-
-        <button type="submit" className="btn btn-primary">
-          Submit
+        <button type="submit" className="btn btn-success">
+          Get Contributions
         </button>
       </form>
     );
