@@ -45,7 +45,7 @@ class App extends Component {
     };
     this.setState({ loading: true, modal_show: true }, () => {
       axios
-        .post("https://rocky-refuge-72367.herokuapp.com/", data)
+        .post("http://localhost:5000/", data)
         .then(res => {
           this.setState({
             loading: false,
