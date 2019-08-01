@@ -1,12 +1,17 @@
 import React, { Component } from "react";
 import Item from "./item";
+import { all } from "q";
 
 class Items extends Component {
   constructor(props) {
     super(props);
     console.log(props.names);
     let contri = [];
-    for (let i = 0; i < props.names.length; i++) contri.push("");
+    let select = [];
+    for (let i = 0; i < props.names.length; i++) {
+      contri.push("");
+      select.push(true);
+    }
     this.state = {
       names: props.names,
       items: [
@@ -14,7 +19,11 @@ class Items extends Component {
           id: 0,
           name: "",
           price: "",
+          selectall: select.every(item => {
+            return item;
+          }),
           contributions: contri,
+          select: select,
           warning: false,
           warning_text: ""
         }
@@ -58,13 +67,21 @@ class Items extends Component {
   addItem() {
     let items = this.state.items;
     let contri = [];
-    for (let i = 0; i < this.state.names.length; i++) contri.push("");
+    let select = [];
+    for (let i = 0; i < this.state.names.length; i++) {
+      contri.push("");
+      select.push(true);
+    }
     items.push({
       id: this.state.id_count + 1,
       name: "",
       price: "",
       contributions: contri,
       warning: false,
+      selectall: select.every(item => {
+        return item;
+      }),
+      select: select,
       warning_text: ""
     });
     this.setState({
@@ -85,26 +102,51 @@ class Items extends Component {
         items[i].warning_text = "";
       }
       if (parseInt(e.target.id) === items[i].id) {
-        console.log("MATCH");
+        console.log(items[i]);
         let item = items[i];
         if (e.target.name === "item") {
           console.log("ITEM");
           item.name = e.target.value;
-        }
-        if (e.target.name === "price") {
+        } else if (e.target.name === "price") {
           if (e.target.value === "" || re.test(e.target.value)) {
             console.log("PRICE");
             item.price = e.target.value;
           }
-        }
-        if (e.target.name === "equal" && e.target.checked) {
-          for (let i = 0; i < this.state.names.length; i++) {
-            item.contributions[i] =
-              Math.round((100 / this.state.names.length) * 100) / 100;
+        } else if (e.target.name === "equal" && e.target.checked) {
+          let num = 0;
+          for (let j = 0; j < this.state.names.length; j++) {
+            if (item.select[j]) num++;
           }
-        } else {
+
+          for (let j = 0; j < this.state.names.length; j++) {
+            if (item.select[j])
+              item.contributions[j] = Math.round((100 / num) * 100) / 100;
+            else item.contributions[j] = "";
+          }
+        } else if (e.target.name === "equal" && !e.target.checked) {
+          for (let j = 0; j < this.state.names.length; j++) {
+            item.contributions[j] = "";
+          }
+        } else if (e.target.name === "selectall" && e.target.checked) {
+          item.selectall = true;
+          for (let j = 0; j < this.state.names.length; j++) {
+            item.select[j] = true;
+          }
+        } else if (e.target.name === "selectall" && !e.target.checked) {
+          item.selectall = false;
+          for (let j = 0; j < this.state.names.length; j++) {
+            item.select[j] = false;
+          }
+        } else if (e.target.name.charAt(0) === "c") {
           item.contributions[parseInt(e.target.name.split("contribution")[1])] =
             e.target.value;
+        } else if (e.target.name.charAt(0) === "s") {
+          console.log(item.select[parseInt(e.target.name.split("select")[1])]);
+          item.select[parseInt(e.target.name.split("select")[1])] = !item
+            .select[parseInt(e.target.name.split("select")[1])];
+          item.selectall = item.select.every(item => {
+            return item;
+          });
         }
         break;
       }
@@ -160,7 +202,7 @@ class Items extends Component {
   render() {
     return (
       <form onSubmit={this.handleForm}>
-        <h3>Enter Items</h3>
+        <h3>Enter Items </h3>
         {this.state.items.map((item, index) => (
           <div
             key={index}
@@ -180,6 +222,8 @@ class Items extends Component {
               name={item.name}
               price={item.price}
               contributions={item.contributions}
+              select={item.select}
+              selectall={item.selectall}
               handleChange={this.itemChange}
               warning={this.state.warning}
               warning_text={this.state.warning_text}

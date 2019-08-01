@@ -3,15 +3,16 @@ import React, { Component } from "react";
 class Item extends Component {
   constructor(props) {
     super(props);
-    let contri = [];
-    for (let i = 0; i < props.names.length; i++) contri.push(0);
+    console.log(props);
     this.state = {
       id: props.id,
       name: props.name,
       price: props.price,
       names: props.names,
       contributions: props.contributions,
+      select: props.select,
       srno: props.srno,
+      selectall: props.selectall,
       warning: props.warning,
       warning_text: props.warning_text
     };
@@ -26,6 +27,8 @@ class Item extends Component {
         price: this.props.price,
         names: this.props.names,
         contributions: this.props.contributions,
+        select: this.props.select,
+        selectall: this.props.selectall,
         warning: this.props.warning,
         warning_text: this.props.warning_text
       });
@@ -33,10 +36,19 @@ class Item extends Component {
   }
 
   render() {
+    console.log(this.state.select);
     let names = (
       <table>
         <thead>
           <tr>
+            <th>
+              <input
+                type="checkbox"
+                name="selectall"
+                id={this.state.id}
+                checked={this.state.selectall}
+              />
+            </th>
             <th>Names</th>
             <th>Percentage of Contribution</th>
           </tr>
@@ -44,6 +56,14 @@ class Item extends Component {
         <tbody>
           {this.state.names.map((name, index) => (
             <tr key={index}>
+              <td>
+                <input
+                  type="checkbox"
+                  name={"select" + index}
+                  id={this.state.id}
+                  checked={this.state.select[index]}
+                />
+              </td>
               <td>{name}</td>
               <td>
                 <input
@@ -94,7 +114,7 @@ class Item extends Component {
             </tbody>
           </table>
           <input type="checkbox" name="equal" id={this.state.id} />
-          Split equally
+          Split Selected
           <br />
           {names}
         </div>
