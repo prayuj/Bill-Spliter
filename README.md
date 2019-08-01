@@ -1,4 +1,14 @@
+## Web Application Deployed!
+URL: https://prayuj.github.io/Bill-Spliter/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## To run locally
+### `npm install`
+### `npm start`
+
+And on another terminal
+### `python flaskapp.py`
 
 ## Available Scripts
 
