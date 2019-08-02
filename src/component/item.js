@@ -14,7 +14,9 @@ class Item extends Component {
       srno: props.srno,
       selectall: props.selectall,
       warning: props.warning,
-      warning_text: props.warning_text
+      warning_text: props.warning_text,
+      tax: props.tax,
+      individual_item_tax_show: props.individual_item_tax_show
     };
   }
 
@@ -30,7 +32,9 @@ class Item extends Component {
         select: this.props.select,
         selectall: this.props.selectall,
         warning: this.props.warning,
-        warning_text: this.props.warning_text
+        warning_text: this.props.warning_text,
+        tax: this.props.tax,
+        individual_item_tax_show: this.props.individual_item_tax_show
       });
     }
   }
@@ -117,6 +121,19 @@ class Item extends Component {
           Split Selected
           <br />
           {names}
+          {this.state.individual_item_tax_show ? (
+            <input
+              type="number"
+              name="item_tax"
+              className="form-control"
+              id={this.state.id}
+              placeholder="Enter Tax on this item"
+              value={this.state.tax}
+              required
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

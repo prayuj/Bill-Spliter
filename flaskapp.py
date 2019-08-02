@@ -23,8 +23,8 @@ def test():
                 contri[person] = 0
                 for item in data['items']:
                     contri[person] += item['price']*(item['contri'][index]/100)
+                    contri[person] *= (100+float(item['tax'])+float(data['taxes']))/100
                 
-                contri[person] *= (100+float(data['taxes']))/100
                 contri[person] = round(contri[person])                     
     
             return contri
@@ -32,6 +32,4 @@ def test():
     else:
         return '<h1>Hello</h1>'
 
-if __name__ == '__main__':
-  app.run(debug=True,host='0.0.0.0',port=5000)
 

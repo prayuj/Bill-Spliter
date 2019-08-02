@@ -35,8 +35,11 @@ class App extends Component {
     });
   }
 
-  getItemsAndTaxes(items, taxes) {
+  getItemsAndTaxes(items, taxes, tax_equal) {
     // {"people":["Prayuj","Sagar","Olivia"],"items":[{"name":"Butter Chicken","price":450,"contri":[50,25,25]}],"taxes":"10"}
+    if (tax_equal) {
+      for (let i = 0; i < items.length; i++) items[i].tax = 0;
+    }
     console.log(items, taxes);
     let data = {
       people: this.state.names,
@@ -45,7 +48,7 @@ class App extends Component {
     };
     this.setState({ loading: true, modal_show: true }, () => {
       axios
-        .post("http://localhost:5000/", data)
+        .post("https://tranquil-wave-24919.herokuapp.com/", data)
         .then(res => {
           this.setState({
             loading: false,

@@ -14,6 +14,7 @@ class Items extends Component {
     }
     this.state = {
       names: props.names,
+      tax_equal: false,
       items: [
         {
           id: 0,
@@ -25,7 +26,8 @@ class Items extends Component {
           contributions: contri,
           select: select,
           warning: false,
-          warning_text: ""
+          warning_text: "",
+          tax: ""
         }
       ],
       id_count: 0,
@@ -35,6 +37,7 @@ class Items extends Component {
     this.itemChange = this.itemChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.handleForm = this.handleForm.bind(this);
+    this.handleEqualTaxChange = this.handleEqualTaxChange.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -82,7 +85,8 @@ class Items extends Component {
         return item;
       }),
       select: select,
-      warning_text: ""
+      warning_text: "",
+      tax: ""
     });
     this.setState({
       id_count: this.state.id_count + 1,
@@ -111,6 +115,11 @@ class Items extends Component {
           if (e.target.value === "" || re.test(e.target.value)) {
             console.log("PRICE");
             item.price = e.target.value;
+          }
+        } else if (e.target.name === "item_tax") {
+          if (e.target.value === "" || re.test(e.target.value)) {
+            console.log("TAX " + e.target.value);
+            item.tax = e.target.value;
           }
         } else if (e.target.name === "equal" && e.target.checked) {
           let num = 0;
@@ -148,6 +157,7 @@ class Items extends Component {
             return item;
           });
         }
+        console.log(item);
         break;
       }
     }
@@ -159,8 +169,10 @@ class Items extends Component {
 
   handleForm(e) {
     e.preventDefault();
+    console.log(this.state.items);
     if (this.state.items.length) {
       let tax = e.target.tax.value;
+      if (tax == "") tax = 0;
       let items = [];
       let flag = true;
       for (let i = 0; i < this.state.count; i++) {
@@ -175,12 +187,28 @@ class Items extends Component {
           item.warning = true;
           item.warning_text = "Make sure Price is Numeric";
         }
+
         let contri = [];
         let sum = 0;
         for (let j = 0; j < this.state.names.length; j++) {
           if (this.state.items[i].contributions[j] === "") contri.push(0);
           else contri.push(parseFloat(this.state.items[i].contributions[j]));
           sum += contri[j];
+        }
+        console.log(
+          !isNaN(parseFloat(this.state.items[i].tax)) && !this.state.tax_equal
+        );
+        if (!this.state.tax_equal) {
+          if (!isNaN(parseFloat(this.state.items[i].tax))) {
+            console.log("It is valid tax");
+            item.tax = parseFloat(this.state.items[i].tax);
+            console.log(item.tax);
+          } else {
+            console.log("It is not valid tax");
+            flag = false;
+            item.warning = true;
+            item.warning_text = "Make sure Tax is Numeric";
+          }
         }
 
         if (Math.round(sum) !== 100) {
@@ -195,13 +223,39 @@ class Items extends Component {
         items: items
       });
       console.log(items, tax);
-      if (flag) this.props.resultOfForm(items, tax);
+      if (flag) this.props.resultOfForm(items, tax, this.state.tax_equal);
     } else alert("Enter Items");
+  }
+
+  handleEqualTaxChange(e) {
+    console.log(e.target.value);
+    const tax_equal = e.target.value === "Yes" ? true : false;
+    this.setState({
+      tax_equal: tax_equal
+    });
   }
 
   render() {
     return (
       <form onSubmit={this.handleForm}>
+        Are all items taxed equally?
+        <input
+          type="radio"
+          name="equaltax"
+          value="Yes"
+          checked={this.state.tax_equal ? true : false}
+          onChange={this.handleEqualTaxChange}
+        />{" "}
+        Yes
+        <input
+          type="radio"
+          name="equaltax"
+          value="No"
+          checked={this.state.tax_equal ? false : true}
+          onChange={this.handleEqualTaxChange}
+        />{" "}
+        No
+        <br />
         <h3>Enter Items </h3>
         {this.state.items.map((item, index) => (
           <div
@@ -225,8 +279,10 @@ class Items extends Component {
               select={item.select}
               selectall={item.selectall}
               handleChange={this.itemChange}
-              warning={this.state.warning}
-              warning_text={this.state.warning_text}
+              warning={item.warning}
+              warning_text={item.warning_text}
+              tax={item.tax}
+              individual_item_tax_show={!this.state.tax_equal}
             />
             <button
               type="button"
@@ -250,20 +306,36 @@ class Items extends Component {
         <br />
         <table>
           <tbody>
-            <tr>
-              <td>Enter total tax</td>
-              <td>
-                <input
-                  type="number"
-                  step="0.01"
-                  name="tax"
-                  className="form-control"
-                  id="nameOfPerson"
-                  placeholder="Enter Tax"
-                  required
-                />
-              </td>
-            </tr>
+            {this.state.tax_equal ? (
+              <tr>
+                <td>Enter total taxes</td>
+                <td>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="tax"
+                    className="form-control"
+                    id="nameOfPerson"
+                    placeholder="Enter Tax"
+                    required
+                  />
+                </td>
+              </tr>
+            ) : (
+              <tr>
+                <td>Enter Additional taxes</td>
+                <td>
+                  <input
+                    type="number"
+                    step="0.01"
+                    name="tax"
+                    className="form-control"
+                    id="nameOfPerson"
+                    placeholder="Enter Tax"
+                  />
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
         <button type="submit" className="btn btn-success">
