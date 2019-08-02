@@ -195,9 +195,6 @@ class Items extends Component {
           else contri.push(parseFloat(this.state.items[i].contributions[j]));
           sum += contri[j];
         }
-        console.log(
-          !isNaN(parseFloat(this.state.items[i].tax)) && !this.state.tax_equal
-        );
         if (!this.state.tax_equal) {
           if (!isNaN(parseFloat(this.state.items[i].tax))) {
             console.log("It is valid tax");
