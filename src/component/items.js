@@ -15,6 +15,7 @@ class Items extends Component {
     this.state = {
       names: props.names,
       tax_equal: false,
+      total_bill: 0.0,
       items: [
         {
           id: 0,
@@ -31,6 +32,7 @@ class Items extends Component {
         }
       ],
       id_count: 0,
+      tax: "",
       count: 1
     };
     this.addItem = this.addItem.bind(this);
@@ -38,6 +40,7 @@ class Items extends Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.handleForm = this.handleForm.bind(this);
     this.handleEqualTaxChange = this.handleEqualTaxChange.bind(this);
+    this.getTotalBill = this.getTotalBill.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -48,6 +51,37 @@ class Items extends Component {
         names: this.props.names
       });
     }
+  }
+
+  getTotalBill() {
+    let total_bill = 0;
+    console.log(this.state);
+    if (this.state.tax_equal)
+      for (let i = 0; i < this.state.items.length; i++) {
+        let item = this.state.items[i];
+        let tax = 0;
+        let price = 0;
+        if (item.price !== "") price = parseFloat(item.price);
+        if (this.state.tax !== "") tax = parseFloat(this.state.tax);
+        total_bill += (price * (100 + tax)) / 100;
+      }
+    else {
+      for (let i = 0; i < this.state.items.length; i++) {
+        let item = this.state.items[i];
+        let item_tax = 0;
+        let tax = 0;
+        let price = 0;
+        if (item.price !== "") price = parseFloat(item.price);
+        if (item.tax !== "") item_tax = parseFloat(item.tax);
+        if (this.state.tax !== "") tax = parseFloat(this.state.tax);
+        console.log(price, item_tax, tax);
+        total_bill += (price * (100 + item_tax + tax)) / 100;
+      }
+    }
+
+    this.setState({
+      total_bill: total_bill
+    });
   }
 
   deleteItem(e) {
@@ -99,72 +133,85 @@ class Items extends Component {
     console.log(e.target);
     const re = /(\d+(\.\d+)?)/;
     let items = this.state.items;
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].warning) {
-        console.log("Here");
-        items[i].warning = false;
-        items[i].warning_text = "";
-      }
-      if (parseInt(e.target.id) === items[i].id) {
-        console.log(items[i]);
-        let item = items[i];
-        if (e.target.name === "item") {
-          console.log("ITEM");
-          item.name = e.target.value;
-        } else if (e.target.name === "price") {
-          if (e.target.value === "" || re.test(e.target.value)) {
-            console.log("PRICE");
-            item.price = e.target.value;
-          }
-        } else if (e.target.name === "item_tax") {
-          if (e.target.value === "" || re.test(e.target.value)) {
-            console.log("TAX " + e.target.value);
-            item.tax = e.target.value;
-          }
-        } else if (e.target.name === "equal" && e.target.checked) {
-          let num = 0;
-          for (let j = 0; j < this.state.names.length; j++) {
-            if (item.select[j]) num++;
-          }
-
-          for (let j = 0; j < this.state.names.length; j++) {
-            if (item.select[j])
-              item.contributions[j] = Math.round((100 / num) * 100) / 100;
-            else item.contributions[j] = "";
-          }
-        } else if (e.target.name === "equal" && !e.target.checked) {
-          for (let j = 0; j < this.state.names.length; j++) {
-            item.contributions[j] = "";
-          }
-        } else if (e.target.name === "selectall" && e.target.checked) {
-          item.selectall = true;
-          for (let j = 0; j < this.state.names.length; j++) {
-            item.select[j] = true;
-          }
-        } else if (e.target.name === "selectall" && !e.target.checked) {
-          item.selectall = false;
-          for (let j = 0; j < this.state.names.length; j++) {
-            item.select[j] = false;
-          }
-        } else if (e.target.name.charAt(0) === "c") {
-          item.contributions[parseInt(e.target.name.split("contribution")[1])] =
-            e.target.value;
-        } else if (e.target.name.charAt(0) === "s") {
-          console.log(item.select[parseInt(e.target.name.split("select")[1])]);
-          item.select[parseInt(e.target.name.split("select")[1])] = !item
-            .select[parseInt(e.target.name.split("select")[1])];
-          item.selectall = item.select.every(item => {
-            return item;
-          });
+    if (e.target.name == "tax")
+      this.setState({ tax: e.target.value }, () => {
+        this.getTotalBill();
+      });
+    else
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].warning) {
+          console.log("Here");
+          items[i].warning = false;
+          items[i].warning_text = "";
         }
-        console.log(item);
-        break;
+        if (parseInt(e.target.id) === items[i].id) {
+          console.log(items[i]);
+          let item = items[i];
+          if (e.target.name === "item") {
+            console.log("ITEM");
+            item.name = e.target.value;
+          } else if (e.target.name === "price") {
+            if (e.target.value === "" || re.test(e.target.value)) {
+              console.log("PRICE");
+              item.price = e.target.value;
+            }
+          } else if (e.target.name === "item_tax") {
+            if (e.target.value === "" || re.test(e.target.value)) {
+              console.log("TAX " + e.target.value);
+              item.tax = e.target.value;
+            }
+          } else if (e.target.name === "equal" && e.target.checked) {
+            let num = 0;
+            for (let j = 0; j < this.state.names.length; j++) {
+              if (item.select[j]) num++;
+            }
+
+            for (let j = 0; j < this.state.names.length; j++) {
+              if (item.select[j])
+                item.contributions[j] = Math.round((100 / num) * 100) / 100;
+              else item.contributions[j] = "";
+            }
+          } else if (e.target.name === "equal" && !e.target.checked) {
+            for (let j = 0; j < this.state.names.length; j++) {
+              item.contributions[j] = "";
+            }
+          } else if (e.target.name === "selectall" && e.target.checked) {
+            item.selectall = true;
+            for (let j = 0; j < this.state.names.length; j++) {
+              item.select[j] = true;
+            }
+          } else if (e.target.name === "selectall" && !e.target.checked) {
+            item.selectall = false;
+            for (let j = 0; j < this.state.names.length; j++) {
+              item.select[j] = false;
+            }
+          } else if (e.target.name.charAt(0) === "c") {
+            item.contributions[
+              parseInt(e.target.name.split("contribution")[1])
+            ] = e.target.value;
+          } else if (e.target.name.charAt(0) === "s") {
+            console.log(
+              item.select[parseInt(e.target.name.split("select")[1])]
+            );
+            item.select[parseInt(e.target.name.split("select")[1])] = !item
+              .select[parseInt(e.target.name.split("select")[1])];
+            item.selectall = item.select.every(item => {
+              return item;
+            });
+          }
+          console.log(item);
+          break;
+        }
       }
-    }
     console.log(items, this.state.count);
-    this.setState({
-      items: items
-    });
+    this.setState(
+      {
+        items: items
+      },
+      () => {
+        this.getTotalBill();
+      }
+    );
   }
 
   handleForm(e) {
@@ -195,6 +242,7 @@ class Items extends Component {
           else contri.push(parseFloat(this.state.items[i].contributions[j]));
           sum += contri[j];
         }
+        if (item.tax === "") item.tax = 0;
         if (!this.state.tax_equal) {
           if (!isNaN(parseFloat(this.state.items[i].tax))) {
             console.log("It is valid tax");
@@ -227,9 +275,14 @@ class Items extends Component {
   handleEqualTaxChange(e) {
     console.log(e.target.value);
     const tax_equal = e.target.value === "Yes" ? true : false;
-    this.setState({
-      tax_equal: tax_equal
-    });
+    this.setState(
+      {
+        tax_equal: tax_equal
+      },
+      () => {
+        this.getTotalBill();
+      }
+    );
   }
 
   render() {
@@ -314,6 +367,8 @@ class Items extends Component {
                     className="form-control"
                     id="nameOfPerson"
                     placeholder="Enter Tax"
+                    value={this.state.tax}
+                    onChange={this.itemChange}
                     required
                   />
                 </td>
@@ -328,6 +383,8 @@ class Items extends Component {
                     name="tax"
                     className="form-control"
                     id="nameOfPerson"
+                    value={this.state.tax}
+                    onChange={this.itemChange}
                     placeholder="Enter Tax"
                   />
                 </td>
@@ -335,6 +392,7 @@ class Items extends Component {
             )}
           </tbody>
         </table>
+        <h3>Total Bill: Rs. {this.state.total_bill}</h3>
         <button type="submit" className="btn btn-success">
           Get Contributions
         </button>

@@ -129,7 +129,6 @@ class Item extends Component {
               id={this.state.id}
               placeholder="Enter Tax on this item"
               value={this.state.tax}
-              required
             />
           ) : (
             ""

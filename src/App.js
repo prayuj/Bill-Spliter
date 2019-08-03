@@ -46,6 +46,8 @@ class App extends Component {
       items: items,
       taxes: taxes
     };
+
+    console.log(data);
     this.setState({ loading: true, modal_show: true }, () => {
       axios
         .post("https://tranquil-wave-24919.herokuapp.com/", data)
