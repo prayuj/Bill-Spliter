@@ -6,11 +6,22 @@ import { IconButton } from "@material-ui/core";
 class GetNames extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      names: [{ name: "", id: 0 }],
-      id_count: 0,
-      count: 1
-    };
+    if (props.names.length == 0)
+      this.state = {
+        names: [{ name: "", id: 0 }],
+        id_count: 0,
+        count: 1
+      };
+    else {
+      let names = [];
+      for (let i = 0; i < props.names.length; i++)
+        names.push({ name: props.names[i], id: i });
+      this.state = {
+        names: names,
+        id_count: props.names.length - 1,
+        count: props.names.length
+      };
+    }
     this.addName = this.addName.bind(this);
     this.handleForm = this.handleForm.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
@@ -27,10 +38,19 @@ class GetNames extends Component {
         names.splice(i, 1);
       }
     }
-    this.setState({
-      names: names,
-      count: this.state.count - 1
-    });
+    this.setState(
+      {
+        names: names,
+        count: this.state.count - 1
+      },
+      () => {
+        let names_updated = [];
+        for (let i = 0; i < this.state.count; i++) {
+          names_updated.push(this.state.names[i].name);
+        }
+        this.props.sendNamesHere(names_updated);
+      }
+    );
   }
 
   addName() {
@@ -63,9 +83,18 @@ class GetNames extends Component {
         names[i].name = e.target.value;
       }
     }
-    this.setState({
-      names: names
-    });
+    this.setState(
+      {
+        names: names
+      },
+      () => {
+        let names_updated = [];
+        for (let i = 0; i < this.state.count; i++) {
+          names_updated.push(this.state.names[i].name);
+        }
+        this.props.sendNamesHere(names_updated);
+      }
+    );
   }
   render() {
     return (
@@ -113,9 +142,9 @@ class GetNames extends Component {
           Add Name
         </button>
         <br />
-        <button type="submit" className="btn btn-info">
+        {/* <button type="submit" className="btn btn-info">
           Start Splitting!
-        </button>
+        </button> */}
       </form>
     );
   }

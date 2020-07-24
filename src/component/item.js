@@ -16,7 +16,7 @@ class Item extends Component {
       warning: props.warning,
       warning_text: props.warning_text,
       tax: props.tax,
-      individual_item_tax_show: props.individual_item_tax_show
+      individual_item_tax_show: props.individual_item_tax_show,
     };
   }
 
@@ -34,7 +34,7 @@ class Item extends Component {
         warning: this.props.warning,
         warning_text: this.props.warning_text,
         tax: this.props.tax,
-        individual_item_tax_show: this.props.individual_item_tax_show
+        individual_item_tax_show: this.props.individual_item_tax_show,
       });
     }
   }
@@ -127,7 +127,7 @@ class Item extends Component {
               name="item_tax"
               className="form-control"
               id={this.state.id}
-              placeholder="Enter Tax on this item"
+              placeholder="Enter Tax on this item as %"
               value={this.state.tax}
             />
           ) : (

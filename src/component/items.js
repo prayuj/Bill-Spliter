@@ -8,33 +8,44 @@ class Items extends Component {
     console.log(props.names);
     let contri = [];
     let select = [];
-    for (let i = 0; i < props.names.length; i++) {
-      contri.push("");
-      select.push(true);
-    }
-    this.state = {
-      names: props.names,
-      tax_equal: false,
-      total_bill: 0.0,
-      items: [
-        {
-          id: 0,
-          name: "",
-          price: "",
-          selectall: select.every(item => {
-            return item;
-          }),
-          contributions: contri,
-          select: select,
-          warning: false,
-          warning_text: "",
-          tax: ""
-        }
-      ],
-      id_count: 0,
-      tax: "",
-      count: 1
-    };
+    if (props.items.length == 0) {
+      for (let i = 0; i < props.names.length; i++) {
+        contri.push("");
+        select.push(true);
+      }
+      this.state = {
+        names: props.names,
+        tax_equal: false,
+        total_bill: props.total_bill,
+        items: [
+          {
+            id: 0,
+            name: "",
+            price: "",
+            selectall: select.every((item) => {
+              return item;
+            }),
+            contributions: contri,
+            select: select,
+            warning: false,
+            warning_text: "",
+            tax: "",
+          },
+        ],
+        id_count: props.items.length - 1,
+        tax: props.taxes,
+        count: props.items.length,
+      };
+    } else
+      this.state = {
+        names: props.names,
+        tax_equal: false,
+        total_bill: props.total_bill,
+        items: props.items,
+        id_count: 0,
+        tax: props.taxes,
+        count: 1,
+      };
     this.addItem = this.addItem.bind(this);
     this.itemChange = this.itemChange.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -48,7 +59,7 @@ class Items extends Component {
     if (JSON.stringify(currentNames) != JSON.stringify(prevProps.names)) {
       console.log("Updated Items");
       this.setState({
-        names: this.props.names
+        names: this.props.names,
       });
     }
   }
@@ -80,7 +91,7 @@ class Items extends Component {
     }
 
     this.setState({
-      total_bill: total_bill
+      total_bill: total_bill,
     });
   }
 
@@ -97,7 +108,7 @@ class Items extends Component {
     console.log(items);
     this.setState({
       items: items,
-      count: this.state.count - 1
+      count: this.state.count - 1,
     });
   }
 
@@ -115,17 +126,17 @@ class Items extends Component {
       price: "",
       contributions: contri,
       warning: false,
-      selectall: select.every(item => {
+      selectall: select.every((item) => {
         return item;
       }),
       select: select,
       warning_text: "",
-      tax: ""
+      tax: "",
     });
     this.setState({
       id_count: this.state.id_count + 1,
       items: items,
-      count: this.state.count + 1
+      count: this.state.count + 1,
     });
   }
 
@@ -160,7 +171,7 @@ class Items extends Component {
               console.log("TAX " + e.target.value);
               item.tax = e.target.value;
             }
-          } else if (e.target.name === "equal" && e.target.checked) {
+          } else if (e.target.name === "equal") {
             let num = 0;
             for (let j = 0; j < this.state.names.length; j++) {
               if (item.select[j]) num++;
@@ -171,11 +182,24 @@ class Items extends Component {
                 item.contributions[j] = Math.round((100 / num) * 100) / 100;
               else item.contributions[j] = "";
             }
-          } else if (e.target.name === "equal" && !e.target.checked) {
-            for (let j = 0; j < this.state.names.length; j++) {
-              item.contributions[j] = "";
-            }
-          } else if (e.target.name === "selectall" && e.target.checked) {
+          }
+          //  else if (e.target.name === "equal" && e.target.checked) {
+          //   let num = 0;
+          //   for (let j = 0; j < this.state.names.length; j++) {
+          //     if (item.select[j]) num++;
+          //   }
+
+          //   for (let j = 0; j < this.state.names.length; j++) {
+          //     if (item.select[j])
+          //       item.contributions[j] = Math.round((100 / num) * 100) / 100;
+          //     else item.contributions[j] = "";
+          //   }
+          // } else if (e.target.name === "equal" && !e.target.checked) {
+          //   for (let j = 0; j < this.state.names.length; j++) {
+          //     item.contributions[j] = "";
+          //   }
+          // }
+          else if (e.target.name === "selectall" && e.target.checked) {
             item.selectall = true;
             for (let j = 0; j < this.state.names.length; j++) {
               item.select[j] = true;
@@ -195,7 +219,7 @@ class Items extends Component {
             );
             item.select[parseInt(e.target.name.split("select")[1])] = !item
               .select[parseInt(e.target.name.split("select")[1])];
-            item.selectall = item.select.every(item => {
+            item.selectall = item.select.every((item) => {
               return item;
             });
           }
@@ -206,7 +230,7 @@ class Items extends Component {
     console.log(items, this.state.count);
     this.setState(
       {
-        items: items
+        items: items,
       },
       () => {
         this.getTotalBill();
@@ -265,10 +289,16 @@ class Items extends Component {
         items.push(item);
       }
       this.setState({
-        items: items
+        items: items,
       });
       console.log(items, tax);
-      if (flag) this.props.resultOfForm(items, tax, this.state.tax_equal);
+      if (flag)
+        this.props.resultOfForm(
+          items,
+          tax,
+          this.state.tax_equal,
+          this.state.total_bill
+        );
     } else alert("Enter Items");
   }
 
@@ -277,7 +307,7 @@ class Items extends Component {
     const tax_equal = e.target.value === "Yes" ? true : false;
     this.setState(
       {
-        tax_equal: tax_equal
+        tax_equal: tax_equal,
       },
       () => {
         this.getTotalBill();
@@ -313,7 +343,7 @@ class Items extends Component {
             style={{
               border: item.warning ? "10px solid red" : "2px solid",
               margin: "2%",
-              padding: "3%"
+              padding: "3%",
             }}
           >
             <h4>
@@ -375,7 +405,7 @@ class Items extends Component {
               </tr>
             ) : (
               <tr>
-                <td>Enter Additional taxes</td>
+                <td>Enter Additional taxes as %</td>
                 <td>
                   <input
                     type="number"
