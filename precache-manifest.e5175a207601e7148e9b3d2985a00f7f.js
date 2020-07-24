@@ -1,27 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "c226e47758e2cc12ea1eca48ebd1b529",
+    "revision": "fdb6e66344c05a74f579c99d54b4857b",
     "url": "/Bill-Spliter/index.html"
   },
   {
-    "revision": "f5d9a19c931d55cba64a",
-    "url": "/Bill-Spliter/static/css/2.b49442d9.chunk.css"
+    "revision": "c5df6d920a97ebd529a5",
+    "url": "/Bill-Spliter/static/css/2.766213bf.chunk.css"
   },
   {
-    "revision": "97c33d85eeda6ba08268",
-    "url": "/Bill-Spliter/static/css/main.771cc898.chunk.css"
+    "revision": "05ca8396ea2b17902193",
+    "url": "/Bill-Spliter/static/css/main.7ec113ed.chunk.css"
   },
   {
-    "revision": "f5d9a19c931d55cba64a",
-    "url": "/Bill-Spliter/static/js/2.2de5d4d4.chunk.js"
+    "revision": "c5df6d920a97ebd529a5",
+    "url": "/Bill-Spliter/static/js/2.5f9c3872.chunk.js"
   },
   {
-    "revision": "97c33d85eeda6ba08268",
-    "url": "/Bill-Spliter/static/js/main.f57fb020.chunk.js"
+    "revision": "97dffe44db3aedde99e22f5d879543b0",
+    "url": "/Bill-Spliter/static/js/2.5f9c3872.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a725ae91837666bf90da",
-    "url": "/Bill-Spliter/static/js/runtime~main.1b266df3.js"
+    "revision": "05ca8396ea2b17902193",
+    "url": "/Bill-Spliter/static/js/main.8138ba46.chunk.js"
+  },
+  {
+    "revision": "89570177da72f8f518a0",
+    "url": "/Bill-Spliter/static/js/runtime-main.4adaa23c.js"
   },
   {
     "revision": "674f50d287a8c48dc19ba404d20fe713",

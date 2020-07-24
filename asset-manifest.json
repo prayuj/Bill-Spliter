@@ -1,18 +1,26 @@
 {
   "files": {
-    "main.css": "/Bill-Spliter/static/css/main.771cc898.chunk.css",
-    "main.js": "/Bill-Spliter/static/js/main.f57fb020.chunk.js",
-    "main.js.map": "/Bill-Spliter/static/js/main.f57fb020.chunk.js.map",
-    "runtime~main.js": "/Bill-Spliter/static/js/runtime~main.1b266df3.js",
-    "runtime~main.js.map": "/Bill-Spliter/static/js/runtime~main.1b266df3.js.map",
-    "static/css/2.b49442d9.chunk.css": "/Bill-Spliter/static/css/2.b49442d9.chunk.css",
-    "static/js/2.2de5d4d4.chunk.js": "/Bill-Spliter/static/js/2.2de5d4d4.chunk.js",
-    "static/js/2.2de5d4d4.chunk.js.map": "/Bill-Spliter/static/js/2.2de5d4d4.chunk.js.map",
+    "main.css": "/Bill-Spliter/static/css/main.7ec113ed.chunk.css",
+    "main.js": "/Bill-Spliter/static/js/main.8138ba46.chunk.js",
+    "main.js.map": "/Bill-Spliter/static/js/main.8138ba46.chunk.js.map",
+    "runtime-main.js": "/Bill-Spliter/static/js/runtime-main.4adaa23c.js",
+    "runtime-main.js.map": "/Bill-Spliter/static/js/runtime-main.4adaa23c.js.map",
+    "static/css/2.766213bf.chunk.css": "/Bill-Spliter/static/css/2.766213bf.chunk.css",
+    "static/js/2.5f9c3872.chunk.js": "/Bill-Spliter/static/js/2.5f9c3872.chunk.js",
+    "static/js/2.5f9c3872.chunk.js.map": "/Bill-Spliter/static/js/2.5f9c3872.chunk.js.map",
     "index.html": "/Bill-Spliter/index.html",
-    "precache-manifest.01312efc888b994dc6579d68dc8f1387.js": "/Bill-Spliter/precache-manifest.01312efc888b994dc6579d68dc8f1387.js",
+    "precache-manifest.e5175a207601e7148e9b3d2985a00f7f.js": "/Bill-Spliter/precache-manifest.e5175a207601e7148e9b3d2985a00f7f.js",
     "service-worker.js": "/Bill-Spliter/service-worker.js",
-    "static/css/2.b49442d9.chunk.css.map": "/Bill-Spliter/static/css/2.b49442d9.chunk.css.map",
-    "static/css/main.771cc898.chunk.css.map": "/Bill-Spliter/static/css/main.771cc898.chunk.css.map",
+    "static/css/2.766213bf.chunk.css.map": "/Bill-Spliter/static/css/2.766213bf.chunk.css.map",
+    "static/css/main.7ec113ed.chunk.css.map": "/Bill-Spliter/static/css/main.7ec113ed.chunk.css.map",
+    "static/js/2.5f9c3872.chunk.js.LICENSE.txt": "/Bill-Spliter/static/js/2.5f9c3872.chunk.js.LICENSE.txt",
     "static/media/font-awesome.css": "/Bill-Spliter/static/media/fontawesome-webfont.fee66e71.woff"
-  }
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4adaa23c.js",
+    "static/css/2.766213bf.chunk.css",
+    "static/js/2.5f9c3872.chunk.js",
+    "static/css/main.7ec113ed.chunk.css",
+    "static/js/main.8138ba46.chunk.js"
+  ]
 }
