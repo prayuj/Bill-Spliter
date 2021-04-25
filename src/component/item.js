@@ -21,7 +21,7 @@ class Item extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (JSON.stringify(this.props) != JSON.stringify(prevProps)) {
+    if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
       console.log("Updated Item Component");
       this.setState({
         id: this.props.id,

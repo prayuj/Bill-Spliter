@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Delete from "@material-ui/icons/Delete";
-import { IconButton } from "@material-ui/core";
 
 class GetNames extends Component {
   constructor(props) {
     super(props);
-    if (props.names.length == 0)
+    if (props.names.length === 0)
       this.state = {
         names: [{ name: "", id: 0 }],
         id_count: 0,
@@ -33,7 +30,7 @@ class GetNames extends Component {
     let names = this.state.names;
     console.log(names);
     for (let i = 0; i < names.length; i++) {
-      if (names[i].id == parseInt(e.target.id)) {
+      if (names[i].id === parseInt(e.target.id)) {
         console.log("Found");
         names.splice(i, 1);
       }
@@ -77,8 +74,8 @@ class GetNames extends Component {
     console.log(e.target.id, e.target.value);
     let names = this.state.names;
     for (let i = 0; i < this.state.count; i++) {
-      console.log(names[i].id == e.target.id);
-      if (names[i].id == e.target.id) {
+      console.log(names[i].id === e.target.id);
+      if (names[i].id === e.target.id) {
         console.log("Here");
         names[i].name = e.target.value;
       }

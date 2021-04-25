@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Item from "./item";
-import { all } from "q";
 
 class Items extends Component {
   constructor(props) {
@@ -8,7 +7,7 @@ class Items extends Component {
     console.log(props.names);
     let contri = [];
     let select = [];
-    if (props.items.length == 0) {
+    if (props.items.length === 0) {
       for (let i = 0; i < props.names.length; i++) {
         contri.push("");
         select.push(true);
@@ -56,7 +55,7 @@ class Items extends Component {
 
   componentDidUpdate(prevProps) {
     let currentNames = this.props.names;
-    if (JSON.stringify(currentNames) != JSON.stringify(prevProps.names)) {
+    if (JSON.stringify(currentNames) !== JSON.stringify(prevProps.names)) {
       console.log("Updated Items");
       this.setState({
         names: this.props.names,
@@ -100,7 +99,7 @@ class Items extends Component {
     let items = this.state.items;
     console.log(items);
     for (let i = 0; i < items.length; i++) {
-      if (items[i].id == parseInt(e.target.id)) {
+      if (items[i].id === parseInt(e.target.id)) {
         console.log("Found");
         items.splice(i, 1);
       }
@@ -144,7 +143,7 @@ class Items extends Component {
     console.log(e.target);
     const re = /(\d+(\.\d+)?)/;
     let items = this.state.items;
-    if (e.target.name == "tax")
+    if (e.target.name === "tax")
       this.setState({ tax: e.target.value }, () => {
         this.getTotalBill();
       });
@@ -227,7 +226,7 @@ class Items extends Component {
     console.log(this.state.items);
     if (this.state.items.length) {
       let tax = e.target.tax.value;
-      if (tax == "") tax = 0;
+      if (tax === "") tax = 0;
       let items = [];
       let flag = true;
       for (let i = 0; i < this.state.count; i++) {
