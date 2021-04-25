@@ -69,7 +69,11 @@ class BillSpliter extends Component {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err.response.data.response);
+          this.setState({
+            loading: false,
+            result_error: err.response.data.response
+          });
         });
     });
   }
@@ -102,7 +106,7 @@ class BillSpliter extends Component {
             {this.state.loading ? (
               <LoadingSpinner />
             ) : (
-              <Result names={this.state.names} result={this.state.result} />
+              <Result names={this.state.names} result={this.state.result} error={this.state.result_error} />
             )}
           </Modal.Body>
 

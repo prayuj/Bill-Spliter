@@ -5,13 +5,16 @@ class Result extends Component {
     super(props);
     this.state = {
       names: props.names,
-      result: props.result
+      result: props.result,
+      error: props.error
     };
   }
   render() {
+    if (this.state.error)
+      return <div>{this.state.error}</div>
     return this.state.names.map((name, index) => (
       <div>
-        {name} has to contribute <strong>Rs.{this.state.result[name]}</strong>
+        {name} has to contribute <strong>₹ {this.state.result[name]}</strong>
       </div>
     ));
   }
