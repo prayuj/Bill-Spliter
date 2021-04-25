@@ -183,22 +183,6 @@ class Items extends Component {
               else item.contributions[j] = "";
             }
           }
-          //  else if (e.target.name === "equal" && e.target.checked) {
-          //   let num = 0;
-          //   for (let j = 0; j < this.state.names.length; j++) {
-          //     if (item.select[j]) num++;
-          //   }
-
-          //   for (let j = 0; j < this.state.names.length; j++) {
-          //     if (item.select[j])
-          //       item.contributions[j] = Math.round((100 / num) * 100) / 100;
-          //     else item.contributions[j] = "";
-          //   }
-          // } else if (e.target.name === "equal" && !e.target.checked) {
-          //   for (let j = 0; j < this.state.names.length; j++) {
-          //     item.contributions[j] = "";
-          //   }
-          // }
           else if (e.target.name === "selectall" && e.target.checked) {
             item.selectall = true;
             for (let j = 0; j < this.state.names.length; j++) {
