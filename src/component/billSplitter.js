@@ -58,9 +58,12 @@ class BillSpliter extends Component {
     };
 
     console.log(data);
+    console.log(JSON.stringify(process.env));
     this.setState({ loading: true, modal_show: true }, () => {
+      //https://create-react-app.dev/docs/adding-custom-environment-variables/#windows-cmdexe
+      //Remember to start the enviro with REACT_APP_*
       axios
-        .post("http://127.0.0.1:5000/", data)
+        .post(process.env.REACT_APP_API, data)
         .then((res) => {
           this.setState({
             loading: false,
@@ -69,11 +72,14 @@ class BillSpliter extends Component {
           console.log(res);
         })
         .catch((err) => {
-          console.log(err.response.data.response);
-          this.setState({
-            loading: false,
-            result_error: err.response.data.response
-          });
+          console.log(err);
+          if (err.response && err.response.data && err.response.data.response) {
+            console.log(err.response.data.response);
+            this.setState({
+              loading: false,
+              result_error: err.response.data.response
+            });
+          }
         });
     });
   }
