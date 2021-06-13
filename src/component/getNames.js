@@ -72,10 +72,11 @@ class GetNames extends Component {
 
   onNameChange(e) {
     console.log(e.target.id, e.target.value);
+    const id = parseInt(e.target.id.split('person-')[1])
     let names = this.state.names;
     for (let i = 0; i < this.state.count; i++) {
-      console.log(names[i].id === e.target.id);
-      if (names[i].id === e.target.id) {
+      console.log(names[i].id, id);
+      if (names[i].id === id) {
         console.log("Here");
         names[i].name = e.target.value;
       }
@@ -106,7 +107,7 @@ class GetNames extends Component {
                     type="text"
                     name="person"
                     value={name.name}
-                    id={name.id}
+                    id={`person-${name.id}`}
                     className="form-control"
                     placeholder="Enter Name of Person"
                     onChange={this.onNameChange}
